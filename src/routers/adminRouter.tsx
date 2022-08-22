@@ -53,6 +53,9 @@ const Quarterly = Loader(
 const AddArticle = Loader(
   lazy(() => import('src/content/dashboards/FakeNews/AddArticle'))
 )
+const AddTaleCollection = Loader(
+  lazy(() => import('src/content/dashboards/RevolutionaryTales/AddTaleCollection'))
+)
 
 const routes: RouteObject[] = [
   {
@@ -99,6 +102,10 @@ const routes: RouteObject[] = [
       {
         path: 'fake-news',
         element: <AddArticle />
+      },
+      {
+        path: 'tales',
+        element: <AddTaleCollection/>
       }
     ]
   },

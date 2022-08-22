@@ -12,6 +12,7 @@ import {
   styled
 } from '@mui/material';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import { Link } from 'react-router-dom';
 
 const AvatarWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -24,10 +25,9 @@ const AvatarWrapper = styled(Avatar)(
     border-radius: 60px;
     height: ${theme.spacing(5.5)};
     width: ${theme.spacing(5.5)};
-    background: ${
-      theme.palette.mode === 'dark'
-        ? theme.colors.alpha.trueWhite[30]
-        : alpha(theme.colors.alpha.black[100], 0.07)
+    background: ${theme.palette.mode === 'dark'
+      ? theme.colors.alpha.trueWhite[30]
+      : alpha(theme.colors.alpha.black[100], 0.07)
     };
   
     img {
@@ -86,13 +86,15 @@ function Wallets() {
         }}
       >
         <Typography variant="h3">Tales Collections</Typography>
-        <Button
-          size="small"
-          variant="outlined"
-          startIcon={<AddTwoToneIcon fontSize="small" />}
-        >
-          Add new Collection
-        </Button>
+        <Link to='/mambo/blogger/tales' style={{ textDecoration: 'none' }}>
+          <Button
+            size="small"
+            variant="outlined"
+            startIcon={<AddTwoToneIcon fontSize="small" />}
+          >
+            Add new Collection
+          </Button>
+        </Link>
       </Box>
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={4} item>
@@ -164,21 +166,23 @@ function Wallets() {
           </Card>
         </Grid>
         <Grid xs={12} sm={6} md={4} item>
-          <Tooltip arrow title="Click to add a new collection">
-            <CardAddAction>
-              <CardActionArea
-                sx={{
-                  px: 1
-                }}
-              >
-                <CardContent>
-                  <AvatarAddWrapper>
-                    <AddTwoToneIcon fontSize="large" />
-                  </AvatarAddWrapper>
-                </CardContent>
-              </CardActionArea>
-            </CardAddAction>
-          </Tooltip>
+          <Link to='/mambo/blogger/tales' style={{ textDecoration: 'none' }}>
+            <Tooltip arrow title="Click to add a new collection">
+              <CardAddAction>
+                <CardActionArea
+                  sx={{
+                    px: 1
+                  }}
+                >
+                  <CardContent>
+                    <AvatarAddWrapper>
+                      <AddTwoToneIcon fontSize="large" />
+                    </AvatarAddWrapper>
+                  </CardContent>
+                </CardActionArea>
+              </CardAddAction>
+            </Tooltip>
+          </Link>
         </Grid>
       </Grid>
     </>

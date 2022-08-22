@@ -86,7 +86,7 @@ function Wallets() {
         }}
       >
         <Typography variant="h3">Articles</Typography>
-        <Link to='/mambo/blogger/fake-news' style={{textDecoration: 'none'}}>
+        <Link to='/mambo/blogger/fake-news' style={{ textDecoration: 'none' }}>
           <Button
             size="small"
             variant="outlined"
@@ -200,21 +200,23 @@ function Wallets() {
           </Card>
         </Grid>
         <Grid xs={12} sm={6} md={3} item>
-          <Tooltip arrow title="Click to add a new article">
-            <CardAddAction>
-              <CardActionArea
-                sx={{
-                  px: 1
-                }}
-              >
-                <CardContent>
-                  <AvatarAddWrapper>
-                    <AddTwoToneIcon fontSize="large" />
-                  </AvatarAddWrapper>
-                </CardContent>
-              </CardActionArea>
-            </CardAddAction>
-          </Tooltip>
+          <Link to='/mambo/blogger/fake-news' style={{ textDecoration: 'none' }}>
+            <Tooltip arrow title="Click to add a new article">
+              <CardAddAction>
+                <CardActionArea
+                  sx={{
+                    px: 1
+                  }}
+                >
+                  <CardContent>
+                    <AvatarAddWrapper>
+                      <AddTwoToneIcon fontSize="large" />
+                    </AvatarAddWrapper>
+                  </CardContent>
+                </CardActionArea>
+              </CardAddAction>
+            </Tooltip>
+          </Link>
         </Grid>
       </Grid>
     </>

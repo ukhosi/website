@@ -4,8 +4,8 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Container, Grid } from '@mui/material';
 import Footer from 'src/components/Footer';
 
-import Wallets from './Articles';
-import WatchList from './ArticlesList';
+import Articles from './Articles';
+import ArticlesList from './ArticlesList';
 
 function Dashboard() {
   return (
@@ -25,10 +25,10 @@ function Dashboard() {
           spacing={4}
         >
           <Grid item lg={12} xs={12}>
-            <Wallets />
+            <Articles />
           </Grid>
           <Grid item xs={12}>
-            <WatchList />
+            <ArticlesList />
           </Grid>
         </Grid>
       </Container>

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   Card,
@@ -12,7 +13,10 @@ import {
   styled
 } from '@mui/material';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
+
+import { db } from 'src/config/firebaseConfig';
 
 const AvatarWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -22,9 +26,8 @@ const AvatarWrapper = styled(Avatar)(
     justify-content: center;
     margin-right: ${theme.spacing(1)};
     padding: ${theme.spacing(0.5)};
-    border-radius: 60px;
-    height: ${theme.spacing(5.5)};
-    width: ${theme.spacing(5.5)};
+    height: ${theme.spacing(6)};
+    width: ${theme.spacing(6)};
     background: ${theme.palette.mode === 'dark'
       ? theme.colors.alpha.trueWhite[30]
       : alpha(theme.colors.alpha.black[100], 0.07)
@@ -35,8 +38,8 @@ const AvatarWrapper = styled(Avatar)(
       padding: ${theme.spacing(0.5)};
       display: block;
       border-radius: inherit;
-      height: ${theme.spacing(4.5)};
-      width: ${theme.spacing(4.5)};
+      height: ${theme.spacing(5)};
+      width: ${theme.spacing(5)};
     }
 `
 );
@@ -74,7 +77,23 @@ const CardAddAction = styled(Card)(
 `
 );
 
-function Wallets() {
+function Tales() {
+  const [talesCollections, setTalesCollections] = React.useState([]);
+
+  React.useEffect(() => {
+    const q = query(collection(db, "TalesCollection"));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let talesCollectionArray = [];
+      querySnapshot.forEach((doc) => {
+        talesCollectionArray.push({ ...doc.data(), id: doc.id });
+      });
+      setTalesCollections(talesCollectionArray);
+    });
+
+    return () => unsub();
+  }, []);
+
+
   return (
     <>
       <Box
@@ -97,74 +116,39 @@ function Wallets() {
         </Link>
       </Box>
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={4} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="BTC"
-                  src="/static/images/placeholders/logo/bitcoin.png"
-                />
-              </AvatarWrapper>
-              <Typography variant="h5" noWrap>
-                Bitcoin
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                BTC
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h3" gutterBottom noWrap>
-                  $3,586.22
+        {talesCollections.map((talesCollection) => (
+          <Grid xs={12} sm={6} md={4} item key={talesCollection.id}>
+            <Card
+              sx={{
+                px: 1
+              }}
+            >
+              <CardContent>
+                <AvatarWrapper>
+                  <img
+                    alt={talesCollection.title}
+                    src={talesCollection.imageUrl}
+                  />
+                </AvatarWrapper>
+                <Typography variant="h5" noWrap>
+                  {talesCollection.title}
                 </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  1.25843 BTC
+                <Typography variant="subtitle1" noWrap>
+                  {talesCollection.abstract}
                 </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} sm={6} md={4} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="Cardano"
-                  src="/static/images/placeholders/logo/cardano.png"
-                />
-              </AvatarWrapper>
-              <Typography variant="h5" noWrap>
-                Cardano
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                ADA
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h3" gutterBottom noWrap>
-                  $54,985.00
-                </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  34,985 ADA
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+                <Box
+                  sx={{
+                    pt: 3
+                  }}
+                >
+                  <Typography variant="subtitle2" noWrap>
+                    1.25843 BTC
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
         <Grid xs={12} sm={6} md={4} item>
           <Link to='/mambo/blogger/tales' style={{ textDecoration: 'none' }}>
             <Tooltip arrow title="Click to add a new collection">
@@ -189,4 +173,4 @@ function Wallets() {
   );
 }
 
-export default Wallets;
+export default Tales;

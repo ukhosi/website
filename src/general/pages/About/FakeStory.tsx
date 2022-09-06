@@ -16,7 +16,7 @@ const FakeStory = () => {
             />
           </Grid>
           <Grid item lg={6} xs={12} sx={{padding: '40px'}} >
-            <Typography variant='h4' align='center' sx={{color: '#551b10'}}>
+            <Typography variant='h3' align='center' sx={{color: '#551b10'}}>
               Our Story
             </Typography>
             <Typography variant='subtitle1' align='center' sx={{color: '#333333'}}>
@@ -30,7 +30,7 @@ const FakeStory = () => {
 
         <Grid container spacing={2} display='flex' alignItems='center' justifyContent='center' >
           <Grid item lg={6} xs={12} sx={{padding: '40px'}} >
-            <Typography variant='h4' align='center' sx={{color: '#551b10'}}>
+            <Typography variant='h3' align='center' sx={{color: '#551b10'}}>
               The Venerated Houses
             </Typography>
             <Typography variant='subtitle1' align='center' sx={{color: '#333333'}}>

@@ -26,7 +26,7 @@ const Footer = () => {
                 />
               </Link>
               <Divider sx={{ marginBottom: '15px' }}>
-                <Typography align='center' sx={{ color: '#fff5f1' }}> Connect with Us</Typography>
+                <Typography align='center' sx={{ color: '#fff5f1'}}> Connect with Us</Typography>
               </Divider>
               <Box>
                 <Grid container spacing={1} direction='row' justifyContent='center' display='flex'>

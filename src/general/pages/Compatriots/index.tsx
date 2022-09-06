@@ -22,7 +22,7 @@ const Compatriots = () => {
                 </Container>
             </Container>
             <Container maxWidth='lg'>
-                <Grid container spacing={2} justifyContent='space-evenly' sx={{  marginTop: '20px', marginBottom: '20px' }}>
+                <Grid container spacing={2} justifyContent='space-evenly' sx={{ marginTop: '20px', marginBottom: '20px' }}>
                     <Grid item xs={12} lg={6}>
                         <Card sx={{ maxWidth: 300 }}>
                             <CardMedia
@@ -36,7 +36,7 @@ const Compatriots = () => {
                                     SiDesigned
                                 </Typography>
                                 <Typography variant="body2" align='center' color="text.secondary">
-                                    Our tech partners. Wed and software designers,
+                                    Our tech partners. Web and software designers,
                                     experts in tech consultancy.
                                 </Typography>
                             </CardContent>

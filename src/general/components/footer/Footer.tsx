@@ -31,7 +31,7 @@ const Footer = () => {
               <Box>
                 <Grid container spacing={1} direction='row' justifyContent='center' display='flex'>
                   <Grid item flex={1}>
-                    <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://rusero.co.zw'>
+                    <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://facebook.com/patriotizim'>
                       <FacebookOutlined
                         sx={{
                           textAlign: 'center',
@@ -47,7 +47,7 @@ const Footer = () => {
                     </a>
                   </Grid>
                   <Grid item flex={1}>
-                    <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://rusero.co.zw'>
+                    <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://twitter.com/patriotizim'>
                       <Twitter
                         sx={{
                           textAlign: 'center',

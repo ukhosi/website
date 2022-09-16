@@ -267,11 +267,16 @@ class Firebase {
 
     deleteTalesCollectionImage = (id: any) => this.storage.ref('talesCollections').child(id).delete();
 
-    edittalesCollection = (id: any, updates: any) =>
+    editTalesCollection = (id: any, updates: any) =>
         this.db.collection('talesCollections').doc(id).update(updates);
 
-    removetalesCollection = (id: any) => this.db.collection('talesCollections').doc(id).delete();
+    removeTalesCollection = (id: any) => this.db.collection('talesCollections').doc(id).delete();
 
 }
+
+const firebaseInstance = new Firebase();
+
+export default firebaseInstance;
+
 
 

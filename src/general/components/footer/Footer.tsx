@@ -25,9 +25,9 @@ const Footer = () => {
                   alt='logo'
                 />
               </Link>
-              <Divider sx={{ marginBottom: '15px' }}>
-                <Typography align='center' sx={{ color: '#fff5f1'}}> Connect with Us</Typography>
-              </Divider>
+              <Typography variant='subtitle1' sx={{ color: '#fff5f1', fontStyle: 'italic', textAlign: 'center', marginBottom: '15px' }}>
+                Connect With Us
+              </Typography>
               <Box>
                 <Grid container spacing={1} direction='row' justifyContent='center' display='flex'>
                   <Grid item flex={1}>
@@ -186,9 +186,9 @@ const Footer = () => {
             </Grid>
             <Grid item lg={3} md={3} sm={12} xs={12}>
               <Grid container display='flex' spacing={1} direction='column'>
-                <Divider sx={{ marginBottom: '15px', marginTop: '9px' }}>
-                  <Typography align='center' sx={{ color: '#fff5f1', fontWeight: 'bold' }}> Quick Links</Typography>
-                </Divider>
+                <Typography variant='subtitle1' sx={{ color: '#fff5f1', fontStyle: 'italic', textAlign: 'center', marginTop: '7.5px' }}>
+                  Quick Links
+                </Typography>
                 <Grid item>
                   <Link to='/about' target='_blank' rel='noreferrer' style={{ textDecoration: 'none' }}>
                     <Typography variant='subtitle1' sx={{ color: '#fff5f1', textAlign: 'center', ':hover': { fontSize: '18px', color: '#d2b48c' } }}>
@@ -221,9 +221,9 @@ const Footer = () => {
             </Grid>
             <Grid item lg={3} md={3} sm={12} xs={12}>
               <Grid item xs={12} sm={12}>
-                <Divider sx={{ marginBottom: '25px' }}>
-                  <Typography align='center' sx={{ color: '#fff5f1', fontWeight: 'bold' }}> Our Biggest Content Sources</Typography>
-                </Divider>
+                <Typography variant='subtitle1' sx={{ color: '#fff5f1', fontStyle: 'italic', textAlign: 'center', marginBottom: '15px' }}>
+                  Our Biggest Content Sources
+                </Typography>
               </Grid>
               <Grid container spacing={2} style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                 <Grid item xs={6} sm={6}>

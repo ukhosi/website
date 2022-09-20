@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   Card,
@@ -11,6 +12,16 @@ import {
   CardActionArea,
   styled
 } from '@mui/material';
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  deleteDoc,
+  doc
+} from 'firebase/firestore';
+import { deleteObject, ref } from "firebase/storage";
+import { db, storage } from 'src/config/firebaseConfig';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import { Link } from 'react-router-dom';
 
@@ -74,7 +85,27 @@ const CardAddAction = styled(Card)(
 `
 );
 
-function Wallets() {
+function Articles() {
+  const [articles, setArticles] = React.useState([]);
+
+  React.useEffect(() => {
+    const articleRef = collection(db, "Articles");
+    const q = query(articleRef, orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const articles = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setArticles(articles);
+      console.log(articles);
+    });
+  }, []);
+
+  const handleDelete = async () => {
+
+  };
+
+
   return (
     <>
       <Box
@@ -97,6 +128,25 @@ function Wallets() {
         </Link>
       </Box>
       <Grid container spacing={3}>
+        <Grid xs={12} sm={6} md={3} item>
+          <Link to='/mambo/blogger/fake-news' style={{ textDecoration: 'none' }}>
+            <Tooltip arrow title="Click to add a new article">
+              <CardAddAction>
+                <CardActionArea
+                  sx={{
+                    px: 1
+                  }}
+                >
+                  <CardContent>
+                    <AvatarAddWrapper>
+                      <AddTwoToneIcon fontSize="large" />
+                    </AvatarAddWrapper>
+                  </CardContent>
+                </CardActionArea>
+              </CardAddAction>
+            </Tooltip>
+          </Link>
+        </Grid>
         <Grid xs={12} sm={6} md={3} item>
           <Card
             sx={{
@@ -199,28 +249,12 @@ function Wallets() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3} item>
-          <Link to='/mambo/blogger/fake-news' style={{ textDecoration: 'none' }}>
-            <Tooltip arrow title="Click to add a new article">
-              <CardAddAction>
-                <CardActionArea
-                  sx={{
-                    px: 1
-                  }}
-                >
-                  <CardContent>
-                    <AvatarAddWrapper>
-                      <AddTwoToneIcon fontSize="large" />
-                    </AvatarAddWrapper>
-                  </CardContent>
-                </CardActionArea>
-              </CardAddAction>
-            </Tooltip>
-          </Link>
-        </Grid>
       </Grid>
+      <Box textAlign='center'>
+        <Button variant='contained' sx={{ marginTop: '8px' }}>Load More</Button>
+      </Box>
     </>
   );
 }
 
-export default Wallets;
+export default Articles;

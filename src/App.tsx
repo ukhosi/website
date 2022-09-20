@@ -3,13 +3,11 @@ import router from 'src/routers/router';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
 
 function App() {
   const content = useRoutes(router);
-  const publicContent = useRoutes(router)
 
   return (
     <>

@@ -42,6 +42,8 @@ const FakeNews = Loader(lazy(() => import('src/content/dashboards/FakeNews')));
 
 const RevolutionaryTales = Loader(lazy(() => import('src/content/dashboards/RevolutionaryTales')));
 
+const TalesCollectionPage = Loader(lazy(() => import('src/content/dashboards/RevolutionaryTales/TalesCollection')));
+
 // Applications
 
 const Messenger = Loader(
@@ -172,6 +174,10 @@ const routes: RouteObject[] = [
       {
         path: 'tales',
         element: <AddTaleCollection />
+      },
+      {
+        path: 'tales/:id',
+        element: <TalesCollectionPage />
       }
     ]
   },

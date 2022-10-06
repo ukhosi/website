@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Container, Divider, Grid, Typography, TextField, Button, Card, CardMedia } from '@mui/material';
+import { Box, Container, Grid, Typography, TextField, Button, Card, CardMedia } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from 'src/config/firebaseConfig';
 import { FacebookOutlined, Twitter, YouTube } from '@mui/icons-material';
 import Logo from '../../../assets/logo/logo.png';
 import Zanu from '../../../assets/sources/zanu.png';
@@ -11,7 +13,40 @@ import Zec from '../../../assets/sources/zec.png';
 
 
 
+
 const Footer = () => {
+  const [loader, setLoader] = React.useState(false);
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [message, setMessage] = React.useState('');
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoader(true);
+
+    await addDoc(collection(db, 'Messages'), {
+      createdAt: new Date(),
+      name: name,
+      email: email,
+      message: message,
+    })
+      .then(() => {
+        setLoader(false);
+        alert('Submission successful, we will get back to you');
+      })
+      .catch((error) => {
+        alert(error.message);
+        setLoader(false);
+      });
+
+    setName('');
+    setEmail('');
+    setMessage('');
+  };
+
+
+
   return (
     <>
       <div style={{ backgroundColor: '#e76b50' }}>
@@ -84,7 +119,7 @@ const Footer = () => {
               </Box>
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3} >
-              <form >
+              <form onSubmit={handleSubmit}>
                 <Typography variant='subtitle1' sx={{ color: '#fff5f1', fontStyle: 'italic', textAlign: 'center' }}>
                   Reach Out to Us
                 </Typography>
@@ -95,23 +130,9 @@ const Footer = () => {
                       label='Name'
                       name='name'
                       variant='outlined'
+                      onChange={(e) => setName(e.target.value)}
                       fullWidth required
-                      inputProps={{
-                        style: {
-                          color: '#fff',
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          color: '#fff5f1',
-                        }
-                      }}
-                      sx={{
-                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#fff',
-                          borderWidth: '1px'
-                        }
-                      }}
+
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -121,23 +142,8 @@ const Footer = () => {
                       label='Email'
                       name='email'
                       variant='outlined'
+                      onChange={(e) => setEmail(e.target.value)}
                       fullWidth required
-                      inputProps={{
-                        style: {
-                          color: '#fff',
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          color: '#fff5f1',
-                        }
-                      }}
-                      sx={{
-                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#fff',
-                          borderWidth: '1px'
-                        }
-                      }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -147,23 +153,8 @@ const Footer = () => {
                       placeholder='Type your message here'
                       name='message'
                       variant='outlined'
+                      onChange={(e) => setMessage(e.target.value)}
                       fullWidth required
-                      inputProps={{
-                        style: {
-                          color: '#fff',
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          color: '#fff5f1',
-                        }
-                      }}
-                      sx={{
-                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#fff',
-                          borderWidth: '1px'
-                        }
-                      }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -171,7 +162,7 @@ const Footer = () => {
                       <Button type='submit'
                         variant='contained'
                         style={{
-                          backgroundColor: '#551b10',
+                          backgroundColor: loader ? '#f36a11' : '#551b10',
                           color: '#e1e1e1',
                           fontSize: '14px',
                           borderRadius: 10,
@@ -189,28 +180,28 @@ const Footer = () => {
                 <Typography variant='subtitle1' sx={{ color: '#fff5f1', fontStyle: 'italic', textAlign: 'center', marginTop: '7.5px' }}>
                   Quick Links
                 </Typography>
-                <Grid item>
+                <Grid item sx={{ height: '30px' }}>
                   <Link to='/about' target='_blank' rel='noreferrer' style={{ textDecoration: 'none' }}>
                     <Typography variant='subtitle1' sx={{ color: '#fff5f1', textAlign: 'center', ':hover': { fontSize: '18px', color: '#d2b48c' } }}>
                       About Us
                     </Typography>
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item sx={{ height: '30px' }}>
                   <Link to='/tales' style={{ textDecoration: 'none' }}>
                     <Typography variant='subtitle1' sx={{ color: '#fff5f1', textAlign: 'center', ':hover': { fontSize: '18px', color: '#d2b48c' } }}>
                       Revolutionary Tales
                     </Typography>
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item sx={{ height: '30px' }}>
                   <Link to='/shop' style={{ textDecoration: 'none' }}>
                     <Typography variant='subtitle1' sx={{ color: '#fff5f1', textAlign: 'center', ':hover': { fontSize: '18px', color: '#d2b48c' } }}>
                       The Patriots' Shop
                     </Typography>
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item sx={{ height: '30px' }}>
                   <Link to='/compatriots' target='_blank' rel='noreferrer' style={{ textDecoration: 'none' }}>
                     <Typography variant='subtitle1' sx={{ color: '#fff5f1', textAlign: 'center', ':hover': { fontSize: '18px', color: '#d2b48c' } }}>
                       Our Compatriots
@@ -228,9 +219,9 @@ const Footer = () => {
               <Grid container spacing={2} style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                 <Grid item xs={6} sm={6}>
                   <a target='_blank' rel='noreferrer' href='https://www.zanupf.org.zw/' >
-                    <Card sx={{ height: '70px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
+                    <Card sx={{ height: '75px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
                       <CardMedia
-                        sx={{ objectFit: 'contain' }}
+                        sx={{ objectFit: 'contain', ':hover': { height: '75px' } }}
                         height='70px'
                         component='img'
                         image={Zanu}
@@ -241,9 +232,9 @@ const Footer = () => {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <a target='_blank' rel='noreferrer' href='https://ccczimbabwe.com/'>
-                    <Card sx={{ height: '70px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
+                    <Card sx={{ height: '75px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
                       <CardMedia
-                        sx={{ objectFit: 'contain' }}
+                        sx={{ objectFit: 'contain', ':hover': { height: '75px' } }}
                         height='70px'
                         component='img'
                         image={Ccc}
@@ -254,9 +245,9 @@ const Footer = () => {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <a target='_blank' rel='noreferrer' href='https://parlzim.gov.zw/'>
-                    <Card sx={{ height: '70px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
+                    <Card sx={{ height: '75px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
                       <CardMedia
-                        sx={{ objectFit: 'contain' }}
+                        sx={{ objectFit: 'contain', ':hover': { height: '75px' } }}
                         height='70px'
                         component='img'
                         image={Parlzim}
@@ -267,9 +258,9 @@ const Footer = () => {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <a target='_blank' rel='noreferrer' href='https://www.zec.org.zw/'>
-                    <Card sx={{ height: '70px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
+                    <Card sx={{ height: '75px', display: 'flex', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
                       <CardMedia
-                        sx={{ objectFit: 'contain' }}
+                        sx={{ objectFit: 'contain', ':hover': { height: '75px' } }}
                         height='70px'
                         component='img'
                         image={Zec}
@@ -287,16 +278,9 @@ const Footer = () => {
       </div >
       <div style={{ backgroundColor: '#d3d3d3' }}>
         <Container >
-          <Grid container spacing={3} direction='row' alignItems='center' justifyContent='center'  >
-            <Grid item lg={6} md={6} sm={12} xs={12} >
-              <Typography variant='subtitle2' sx={{ color: '#333333' }}>
-                The Venerated Houses © {new Date().getFullYear()}. All right reserved.  <a style={{ color: '#333333' }} target='_blank' rel='noreferrer' href='https://rusero.co.zw'>SiDesigned</a>
-              </Typography>
-            </Grid>
-            <Grid item lg={6} md={6} sm={12} xs={12} display='flex' flexDirection='row-reverse'>
-              Zimbabwe2
-            </Grid>
-          </Grid>
+          <Typography align='center' variant='subtitle2' sx={{ color: '#333333', paddingTop: '10px' }}>
+            The Venerated Houses © {new Date().getFullYear()}. All rights reserved.  <a style={{ color: '#333333' }} target='_blank' rel='noreferrer' href='https://munashe.co.zw'>SiDesigned</a>
+          </Typography>
         </Container>
         <br />
       </div>

@@ -26,47 +26,61 @@ const AddTaleCollection = () => {
         event.preventDefault();
         setLoader(true);
 
-        const storageRef = ref(
-            storage,
-            `/images/${Date.now()}${image}`
-        );
+        const storageRef = ref(storage, 'images/' + image.name);
+        const uploadTask = uploadBytesResumable(storageRef, image);
 
-        const uploadImage = uploadBytesResumable(storageRef, image);
-
-        uploadImage.on(
-            "state_changed",
+        uploadTask.on('state_changed',
             (snapshot) => {
-                const progressPercent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                setProgress(progressPercent);
-                console.log('Upload is ' + progress + '% done')
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
             },
-            (err) => {
-                console.log(err);
-            },
-            () =>
+            (error) => {
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
 
-                getDownloadURL(uploadImage.snapshot.ref).then((url) => {
-                    const articleRef = collection(db, "TalesCollection");
+                    // ...
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                }
+            },
+            () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    const articleRef = collection(db, "TalesCollections");
                     addDoc(articleRef, {
                         title: title,
                         abstract: abstract,
-                        imageUrl: url,
+                        imageUrl: downloadURL,
                         createdAt: Timestamp.now().toDate(),
                     })
                         .then(() => {
                             setLoader(false);
-                            alert('Article Successfully Published');
+                            alert('Tales Collection Successfully Published');
                         })
                         .catch((error) => {
                             alert(error.message);
                             setLoader(false);
                         });
-                }
-                )
-        )
+                });
+            }
+        );
     };
-
-
 
 
     return (
@@ -152,3 +166,10 @@ const AddTaleCollection = () => {
 }
 
 export default AddTaleCollection
+
+
+
+
+
+
+

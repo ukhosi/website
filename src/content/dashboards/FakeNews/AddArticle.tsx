@@ -1,10 +1,11 @@
 import { Container, Grid, Typography, TextField, Box, MenuItem, Button } from '@mui/material';
 import * as React from 'react';
+import { LinearProgress } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import Footer from 'src/components/Footer';
 
 import { Timestamp, collection, addDoc } from 'firebase/firestore';
-import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, db } from 'src/config/firebaseConfig';
 
 const authors = [
@@ -31,60 +32,71 @@ const AddArticle = () => {
   const [body, setBody] = React.useState('');
   const [progress, setProgress] = React.useState(0);
 
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0])
   }
-
 
   const handlePublish = (event) => {
     event.preventDefault();
     setLoader(true);
 
-    if (!title || !abstract|| !image || !body ) {
-      alert("Please fill all the fields");
-      return;
-    }
+    const storageRef = ref(storage, 'images/' + image.name);
+    const uploadTask = uploadBytesResumable(storageRef, image);
 
-    const storageRef = ref(
-      storage,
-      `/images/${Date.now()}${image}`
-    );
-
-    const uploadImage = uploadBytesResumable(storageRef, image);
-
-    uploadImage.on(
-      "state_changed",
+    uploadTask.on('state_changed',
       (snapshot) => {
-        const progressPercent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progressPercent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
         setProgress(progressPercent);
-        console.log('Upload is ' + progress + '% done')
       },
-      (err) => {
-        console.log(err);
-      },
-      () =>
+      (error) => {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
 
-        getDownloadURL(uploadImage.snapshot.ref).then((url) => {
+          // ...
+
+          case 'storage/unknown':
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const articleRef = collection(db, "Articles");
           addDoc(articleRef, {
             title: title,
             abstract: abstract,
             body: body,
             author: author,
-            imageUrl: url,
+            imageUrl: downloadURL,
             createdAt: Timestamp.now().toDate(),
           })
             .then(() => {
               setLoader(false);
+              setProgress(0);
               alert('Article Successfully Published');
             })
             .catch((error) => {
               alert(error.message);
               setLoader(false);
             });
-        }
-        )
-    )
+        });
+      }
+    );
+
+    setTitle('');
+    setAbstract('');
+    setBody('');
+    setImage('')
   };
 
   return (
@@ -142,19 +154,15 @@ const AddArticle = () => {
                 type="file"
                 onChange={handleImageChange}
               />
-              {progress === 0 ? null : (
-                <div>
-                  <div
-                    style={{ width: `${progress}%` }}
-                  >
-                    {`uploading image ${progress}%`}
-                  </div>
-                </div>
-              )}
               <label htmlFor="raised-button-file">
                 <Button component="span" sx={{ color: '#333333' }}>
                   <UploadIcon /> Article Cover Image
                 </Button>
+                {loader ?
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgress variant="determinate" value={progress} />
+                  </Box>
+                  : null}
               </label>
             </Box>
           </Grid>
@@ -216,3 +224,5 @@ const AddArticle = () => {
 }
 
 export default AddArticle
+
+

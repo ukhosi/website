@@ -128,127 +128,39 @@ function Articles() {
         </Link>
       </Box>
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={3} item>
-          <Link to='/mambo/blogger/fake-news' style={{ textDecoration: 'none' }}>
-            <Tooltip arrow title="Click to add a new article">
-              <CardAddAction>
-                <CardActionArea
+        {articles.map((article) => (
+          <Grid xs={12} sm={6} md={3} item key={article.id}>
+            <Card
+              sx={{
+                px: 1
+              }}
+            >
+              <CardContent>
+                <AvatarWrapper>
+                  <img
+                    alt={article.title}
+                    src={article.image}
+                  />
+                </AvatarWrapper>
+                <Typography variant="subtitle1" noWrap>
+                  {article.createdAt}
+                </Typography>
+                <Box
                   sx={{
-                    px: 1
+                    pt: 3
                   }}
                 >
-                  <CardContent>
-                    <AvatarAddWrapper>
-                      <AddTwoToneIcon fontSize="large" />
-                    </AvatarAddWrapper>
-                  </CardContent>
-                </CardActionArea>
-              </CardAddAction>
-            </Tooltip>
-          </Link>
-        </Grid>
-        <Grid xs={12} sm={6} md={3} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="BTC"
-                  src="/static/images/placeholders/logo/bitcoin.png"
-                />
-              </AvatarWrapper>
-              <Typography variant="h5" noWrap>
-                Bitcoin
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                BTC
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h3" gutterBottom noWrap>
-                  $3,586.22
-                </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  1.25843 BTC
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} sm={6} md={3} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="Ripple"
-                  src="/static/images/placeholders/logo/ripple.png"
-                />
-              </AvatarWrapper>
-              <Typography variant="h5" noWrap>
-                Ripple
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                XRP
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h3" gutterBottom noWrap>
-                  $586.83
-                </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  5,783 XRP
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid xs={12} sm={6} md={3} item>
-          <Card
-            sx={{
-              px: 1
-            }}
-          >
-            <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="Cardano"
-                  src="/static/images/placeholders/logo/cardano.png"
-                />
-              </AvatarWrapper>
-              <Typography variant="h5" noWrap>
-                Cardano
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                ADA
-              </Typography>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
-                <Typography variant="h3" gutterBottom noWrap>
-                  $54,985.00
-                </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  34,985 ADA
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+                  <Typography variant="h4" gutterBottom noWrap>
+                    {article.title}
+                  </Typography>
+                  <Typography variant="subtitle2" noWrap>
+                    1.25843 BTC
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
       <Box textAlign='center'>
         <Button variant='contained' sx={{ marginTop: '8px' }}>Load More</Button>

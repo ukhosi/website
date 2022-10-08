@@ -5,7 +5,8 @@
   "description": "This site was made for fellow Zimbabwean patriots scattered all over the globe. Source code is free for all",
   "author": {
     "name": "Denis 'SiDesigned' Siduna",
-    "url": "https://rusero.co.zw"
+    "url": "https://munashe.co.zw",
+    "email": "denis.siduna@gmail.com"
   },
   "private": false,
   "dependencies": {
@@ -35,6 +36,8 @@
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "stylis": "4.1.1",
     "stylis-plugin-rtl": "2.1.1",
     "typescript": "4.7.3",

@@ -98,7 +98,7 @@ const Footer = () => {
                     </a>
                   </Grid>
                   <Grid item flex={1}>
-                    <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://rusero.co.zw'>
+                    <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://www.youtube.com/channel/UCpsxK9qqm96XU5sTmYRHjhA'>
                       <YouTube
                         sx={{
                           textAlign: 'center',
@@ -130,6 +130,7 @@ const Footer = () => {
                       label='Name'
                       name='name'
                       variant='outlined'
+                      inputProps={{ style: { color: '#fff' } }}
                       onChange={(e) => setName(e.target.value)}
                       fullWidth required
 
@@ -142,6 +143,7 @@ const Footer = () => {
                       label='Email'
                       name='email'
                       variant='outlined'
+                      inputProps={{ style: { color: '#fff' } }}
                       onChange={(e) => setEmail(e.target.value)}
                       fullWidth required
                     />
@@ -153,6 +155,7 @@ const Footer = () => {
                       placeholder='Type your message here'
                       name='message'
                       variant='outlined'
+                      inputProps={{ style: { color: '#fff' } }}
                       onChange={(e) => setMessage(e.target.value)}
                       fullWidth required
                     />

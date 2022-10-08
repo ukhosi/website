@@ -15,8 +15,6 @@ const firebaseConfig = {
 
 };
 
-console.log(process.env.REACT_APP_FIREBASE_STORAGE_BUCKET)
-
 
 const app = initializeApp(firebaseConfig);
 

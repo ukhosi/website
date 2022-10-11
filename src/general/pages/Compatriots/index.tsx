@@ -41,7 +41,7 @@ const Compatriots = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions style={{ justifyContent: 'center' }}>
-                                <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://rusero.co.zw'>
+                                <a style={{ color: '#fff' }} target='_blank' rel='noreferrer' href='https://munashe.co.zw'>
                                     <Button size="small" sx={{ color: '#551b10' }}>visit website</Button>
                                 </a>
                             </CardActions>

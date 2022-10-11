@@ -8,6 +8,9 @@ import PublicPagesLayout from 'src/layouts/PublicPagesLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
+//Admin Routes
+import PrivateRoute from './PrivateRoute';
+
 const Loader = (Component) => (props) =>
 (
   <Suspense fallback={<SuspenseLoader />}>
@@ -34,6 +37,7 @@ const Compatriots = publicPagesLoader(lazy(() => import('../general/pages/Compat
 const Landing = publicPagesLoader(lazy(() => import('../general/pages/Landing')));
 const Shop = publicPagesLoader(lazy(() => import('../general/pages/Shop')));
 const Tales = publicPagesLoader(lazy(() => import('../general/pages/Tales')));
+const Article = publicPagesLoader(lazy(() => import('src/general/pages/article')));
 
 
 // Dashboards
@@ -78,21 +82,9 @@ const AddTaleCollection = Loader(
 );
 
 // Status
-
 const Status404 = Loader(
   lazy(() => import('src/content/pages/Status/Status404'))
 );
-const Status500 = Loader(
-  lazy(() => import('src/content/pages/Status/Status500'))
-);
-const StatusComingSoon = Loader(
-  lazy(() => import('src/content/pages/Status/ComingSoon'))
-);
-const StatusMaintenance = Loader(
-  lazy(() => import('src/content/pages/Status/Maintenance'))
-);
-
-
 
 const routes: RouteObject[] = [
   {
@@ -122,8 +114,11 @@ const routes: RouteObject[] = [
       {
         path: '*',
         element: <Status404 />
-
       },
+      {
+        path: 'fake-news/:id',
+        element: <Article />
+      }
     ]
   },
   {
@@ -143,7 +138,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'mambo/dashboards',
-    element: <SidebarLayout />,
+    element: <PrivateRoute><SidebarLayout /></PrivateRoute>,
     children: [
       {
         path: '',
@@ -165,7 +160,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'mambo/blogger',
-    element: <SidebarLayout />,
+    element: <PrivateRoute><SidebarLayout /></PrivateRoute>,
     children: [
       {
         path: 'fake-news',
@@ -184,7 +179,7 @@ const routes: RouteObject[] = [
 
   {
     path: 'mambo/management',
-    element: <SidebarLayout />,
+    element: <PrivateRoute><SidebarLayout /></PrivateRoute>,
     children: [
       {
         path: '',
@@ -212,7 +207,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'mambo/reports',
-    element: <SidebarLayout />,
+    element: <PrivateRoute><SidebarLayout /></PrivateRoute>,
     children: [
       {
         path: 'weekly',

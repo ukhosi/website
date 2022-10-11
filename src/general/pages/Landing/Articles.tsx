@@ -8,7 +8,8 @@ import {
     CardContent,
     Typography,
     CardActions,
-    CardMedia
+    CardMedia,
+    Skeleton
 } from '@mui/material';
 
 import {
@@ -26,6 +27,7 @@ import {
     Unsubscribe,
 } from 'firebase/firestore';
 import { db } from 'src/config/firebaseConfig';
+import { Link } from 'react-router-dom';
 
 
 const articleSize = 4;
@@ -72,10 +74,6 @@ const Articles = () => {
     const [articles, setArticles] = React.useState([]);
 
     const [data, setData] = React.useState<any[]>([]);
-    /**
-     * Mitigate callback closure stale state reference
-     * https://css-tricks.com/dealing-with-stale-props-and-states-in-reacts-functional-components/
-     * */
     const dataRef = React.useRef(data);
     const [lastDocument, setLastDocument] = React.useState<any>(null);
     const [fetchingData, setFetchingData] = React.useState(true);
@@ -90,20 +88,9 @@ const Articles = () => {
         const unsub = getFirstArticlesBatch((querySnapshot) => {
             const posts: any[] = [];
             querySnapshot.docChanges().forEach(({ type, doc }) => {
-                /**
-                 * All posts are of type 'added' when being fetched for the first time
-                 *    After initial fetch this callback function is triggered when new post is created
-                 *    This time only newly created post will be of type added
-                 *    Previously fetched posts will be of type removed
-                 **/
                 if (type === "added") posts.push({ id: doc.id, ...doc.data() });
             });
 
-            /**
-             * If posts is fetched for the very first time
-             *    Then set current last document as lastDocument for pagination
-             *    See: https://firebase.google.com/docs/firestore/query-data/query-cursors#paginate_a_query
-             * */
             if (dataRef.current.length === 0)
                 setLastDocument(
                     querySnapshot.docChanges()[querySnapshot.docChanges().length - 1].doc
@@ -140,19 +127,39 @@ const Articles = () => {
                         {data.map((article) => (
                             <Grid xs={12} sm={12} md={6} lg={6} item key={article.id}>
                                 <Card sx={{ maxWidth: 345, height: '400px' }} >
-                                    <CardMedia
-                                        component="img"
-                                        alt={article.title}
-                                        height="240"
-                                        image={article.imageUrl}
-                                    />
+
+                                    {article ? (
+                                        <CardMedia
+                                            component="img"
+                                            alt={article.title}
+                                            height="240"
+                                            image={article.imageUrl}
+                                        />
+                                    ) : (
+                                        <React.Fragment>
+                                            <Skeleton variant="rectangular" width={400} height={60} />
+                                        </React.Fragment>
+                                    )}
                                     <CardContent sx={{ height: '80px' }}>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            {article.title}
-                                        </Typography>
+                                        {article ? (
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {article.title}
+                                            </Typography>
+                                        ) : (
+                                            <Skeleton animation="wave" height={80} />
+                                        )}
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small">Continue Reading</Button>
+                                        {article ? (
+                                            <Link to={`/fake-news/${article.id}`} target='_blank' rel='noreferrer' style={{ textDecoration: 'none' }}>
+                                                <Button size="small">Continue Reading</Button>
+                                            </Link>
+                                        ) : (
+
+                                            <Box justifyContent='center'>
+                                                <Skeleton animation="wave" height={30} width="60%" />
+                                            </Box>
+                                        )}
                                     </CardActions>
                                 </Card>
                             </Grid>

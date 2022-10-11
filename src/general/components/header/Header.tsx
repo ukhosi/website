@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import "./Header.css";
-import { CSSTransition } from "react-transition-group";
+import './Header.css';
+import { CSSTransition } from 'react-transition-group';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
@@ -8,7 +8,7 @@ const Header = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 700px)");
+    const mediaQuery = window.matchMedia('(max-width: 700px)');
     mediaQuery.addListener(handleMediaQueryChange);
     handleMediaQueryChange(mediaQuery);
 
@@ -31,23 +31,23 @@ const Header = () => {
 
   return (
     <>
-      <header className="Header">
+      <header className='Header'>
         <a href='/'>
-          <img src={require("../../../assets/logo/logo.png")} className="Logo" alt="logo" />
+          <img src={require('../../../assets/logo/logo.png')} className='Logo' alt='logo' />
         </a>
         <CSSTransition
           in={!isSmallScreen || isNavVisible}
           timeout={350}
-          classNames="NavAnimation"
+          classNames='NavAnimation'
           unmountOnExit
         >
-          <nav className="Nav">
-            <a href="/">Fake News</a>
-            <a href="/tales">Revolutionary Tales</a>
-            <a href="/shop">Patriots' Shop</a>
+          <nav className='Nav'>
+            <a href='/#/'>Fake News</a>
+            <a href='/#/tales'>Revolutionary Tales</a>
+            <a href='/#/shop'>Patriots' Shop</a>
           </nav>
         </CSSTransition>
-        <button onClick={toggleNav} className="mobile-menu">
+        <button onClick={toggleNav} className='mobile-menu'>
           <MenuIcon style={{ color: '#fff5f1' }} />
         </button>
       </header>

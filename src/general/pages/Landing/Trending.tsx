@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Typography, Card, CardMedia, CardContent, Grid } from '@mui/material';
+import { Container, Typography, Card, CardMedia, CardContent} from '@mui/material';
 import Slider from 'react-slick';
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import {
     collection,
     query,
@@ -78,6 +78,7 @@ const Trending = () => {
                     {articles.map((article, i) => {
                         return (
                             <div key={article.id}>
+                                 <Link to={`/fake-news/${article.id}`} target='_blank' rel='noreferrer' style={{ textDecoration: 'none' }}>
                                 <Card sx={{ width: '450', height: '400', backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}>
                                     <CardMedia
                                         component='img'
@@ -85,14 +86,15 @@ const Trending = () => {
                                         height='320px'
                                         width='400px'
                                         image={article.imageUrl}
-                                        alt={article.abstract}
+                                        alt={article.title}
                                     />
                                     <CardContent>
-                                        <Typography variant='h4' color='text.secondary' align='center'>
+                                        <Typography variant='h3' color='text.secondary' align='center'>
                                             {article.title}
                                         </Typography>
                                     </CardContent>
                                 </Card>
+                                </Link>
                             </div>
                         )
                     })}

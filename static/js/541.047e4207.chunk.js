@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpatriotizim=self.webpackChunkpatriotizim||[]).push([[541],{6541:function(i,n,t){t.r(n);var e=t(890),r=t(184);n.default=function(){return(0,r.jsx)("div",{children:(0,r.jsx)(e.Z,{variant:"h3",align:"center",children:"Coming Soon"})})}}}]);
+//# sourceMappingURL=541.047e4207.chunk.js.map
